@@ -1,0 +1,13 @@
+.settingsButton {
+    height: 50px;
+    width: 50px;
+    padding: 10px;
+    border-radius: 10px;
+    background: none;
+    border: none;
+}
+
+.settingsButton svg {
+    height: 100%;
+    width: 100%;
+}

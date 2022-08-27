@@ -1,38 +1,113 @@
+
+button {
+  background-color: rgba(0,0,0,0);
+  border: none;
+  outline: none;
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
+
+  -webkit-tap-highlight-color: transparent;
+}
+
+.App.blue {
+  --main: #adc3ff;
+  --contrast: #001c6d;
+}
+
+.App.red {
+  --main: #ffb9bd;
+  --contrast: #680009;
+}
+
+.App.pretty {
+  --main: #d2b9ff;
+  --contrast: #31008e;
+}
+
+#root {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .App {
-  text-align: center;
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;background-color: var(--main);
+  color: var(--contrast);
+  transition: background-color 500ms;
+
+  --height: min(840px, 100vh);
+  --width: min(450px, 100vw);
+  height: var(--height);
+  width: var(--width);
+
+  overflow: hidden;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.contentWrapper {
+  position: relative;
+  height: 100%;
+  width: 100%;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.content {
+  position: relative;
+  height: calc(100% - 40px);
+  width: calc(100% - 40px);
+  padding: 20px 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.settingsContainer,
+.grevlingContainer {
+  transition: opacity 250ms linear;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.menuContainer.hidden,
+.grevlingContainer.hidden {
+  opacity: 0;
+  pointer-events: none;
 }
+
+.grevling {
+  --grevlingSize: calc(min(var(--height), var(--width)) * .8);
+  height: var(--grevlingSize);
+  width: var(--grevlingSize);
+}
+
+.radioContainer {
+  -webkit-transition: height 250ms linear, opacity 250ms linear;
+  -moz-transition: height 250ms linear, opacity 250ms linear;
+  -o-transition: height 250ms linear, opacity 250ms linear;
+  transition: height 250ms linear, opacity 250ms linear;
+
+  overflow: hidden;
+
+  height: 165px;
+  opacity: 1;
+}
+
+.radioContainer.hidden {
+  height: 0;
+  opacity: 0;
+}
+
+.xburgerMenu {
+  padding-left: 60px;
+}
+
+.checkBox,
+.radioButton {
+  margin: 10px;
+}
+

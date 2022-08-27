@@ -1,0 +1,91 @@
+.xburgerMenuButton {
+    font-size: 1.3em;
+    padding: 0;
+    cursor: pointer;
+    height: 50px;
+    width: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    outline: none;
+    border: none;
+    -webkit-tap-highlight-color:  rgba(255, 255, 255, 0);
+    border-radius: .5rem;
+}
+
+.xburgerMenu {
+    padding-top: 80px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+}
+
+.xburgerMenu.fader {
+    left: 0;
+    right: 0;
+}
+
+.slider.xburgerMenu {
+    left: calc(100vw + 20px);
+    right: calc(-80vw - 20px);
+}
+
+.left.slider.xburgerMenu {
+    left: calc(-80vw - 20px);
+    right: calc(100vw + 20px);
+}
+
+.button {
+    position: absolute;
+    top: 1rem;
+}
+
+.button:not(.left) {
+    right: 1rem;
+}
+
+.left.button {
+    left: 1rem;
+}
+
+.xburgerTouchOutsideSensor {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.xburgerTouchOutsideSensor.show {
+    opacity: 1;
+    pointer-events: unset;
+}
+
+.slider.xburgerMenu.show {
+    left: 0;
+    right: 0;
+}
+
+.partial.slider.xburgerMenu.show:not(.left) {
+    left: 20vw;
+}
+
+.partial.left.slider.xburgerMenu.show {
+    right: 20vw;
+}
+
+
+.xburgerMenu a * {
+    pointer-events: none; /* allow menu item click detection to close menu*/
+}
+
+.fader.xburgerMenu {
+    opacity: 1;
+}
+
+.fader.xburgerMenu:not(.show) {
+    opacity: 0;
+    pointer-events: none;
+}
