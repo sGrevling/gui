@@ -1,10 +1,8 @@
 import './App.css';
 import {useState} from "react";
-import {RadioGroup} from "./Library/Radio/RadioGroup";
-import {CheckBox} from "./Library/CheckBox";
-import {ToggleSwitch} from "./Library/ToggleSwitch";
-import Menu from "./Library/Menu/Menu";
+
 import badger from "./badger.jpeg";
+import {CheckBox, Menu, RadioGroup, ToggleSwitch} from "./Library";
 
 const getColors = (key) => {
     switch(key) {

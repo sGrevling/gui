@@ -4,7 +4,7 @@ import {MenuButton} from "../Buttons/MenuButton";
 import {SettingsButton} from "../Buttons/SettingsButton";
 
 
-const Menu = ({
+export const Menu = ({
                   children,
                   onCloseClickOverride,
                   shouldCloseOnClick,
@@ -102,5 +102,3 @@ const Menu = ({
         </Fragment>
     );
 }
-
-export default Menu;

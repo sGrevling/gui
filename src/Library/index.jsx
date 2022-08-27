@@ -1,17 +1,6 @@
-import Menu from './Menu/Menu';
-import { SettingsButton } from './Buttons/SettingsButton'
-import { MenuButton } from './Buttons/MenuButton'
-import { RadioButton, RadioGroup } from './Radio'
-import { CheckBox } from './CheckBox'
-import { ToggleSwitch } from './ToggleSwitch'
-
-const exports = {
-    Menu,
-    SettingsButton,
-    MenuButton,
-    RadioButton,
-    RadioGroup,
-    CheckBox,
-    ToggleSwitch
-}
-export default exports;
+export { Menu } from './Menu/Menu';
+export { SettingsButton } from './Buttons/SettingsButton'
+export { MenuButton } from './Buttons/MenuButton'
+export { RadioButton, RadioGroup } from './Radio'
+export { CheckBox } from './CheckBox'
+export { ToggleSwitch } from './ToggleSwitch'
