@@ -3,6 +3,7 @@ import {useState} from "react";
 
 import badger from "./badger.jpeg";
 import {CheckBox, Menu, RadioGroup, ToggleSwitch} from "./Library";
+import {Loader} from "./Library/Loader/Loader";
 
 const getColors = (key) => {
     switch(key) {
@@ -19,7 +20,7 @@ const getColors = (key) => {
         default:
             return {
                 main: '#d2b9ff',
-                contrast: '#31008'
+                contrast: '#31008e'
             }
     }
 }
@@ -105,7 +106,7 @@ function App() {
                         grevling ? (
                             <img src={badger} alt="badger"/>
                         ) : (
-                            <h1>Gui elements</h1>
+                            <Loader color={contrast} size={'400px'}/>
                         )
                     }
             </div>

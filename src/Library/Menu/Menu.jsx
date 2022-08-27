@@ -32,15 +32,14 @@ export const Menu = ({
             className={`button ${left ? 'left' : ''}`}
             open={!!(show || onCloseClickOverride)}
             setOpen={setShow}
-            transitionTime={transitionTime * .6}
-            stageDelay={transitionTime * .1}
+            transitionTime={transitionTime}
+            stageDelay={transitionTime * .3}
             color={color}
             backgroundColor={bgColor}
             styles={{
                 zIndex: zIndex + 2,
                 backgroundColor: bgColor
             }}
-            // rounding={2}
         />
     }
 
