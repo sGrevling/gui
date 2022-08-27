@@ -1,3 +1,4 @@
+import React from 'react';
 import './Buttons.css'
 
 export const SettingsButton = ({
