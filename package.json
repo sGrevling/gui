@@ -11,6 +11,11 @@
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
   },
+  "devDependencies": {
+    "@babel/cli": "^7.18.9",
+    "@babel/core": "^7.18.9",
+    "@babel/preset-env": "^7.18.9"
+  },
   "scripts": {
     "start": "PORT=3333 BROWSER=NONE react-scripts start",
     "build": "rm -rf dist && NODE_ENV=production babel src/Library --out-dir dist --copy-files",
