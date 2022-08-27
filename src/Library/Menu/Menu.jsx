@@ -28,8 +28,6 @@ export const Menu = ({
         bgc = bgColor,
         bdc = backdropColor ?? '#e3e6e850';
 
-    console.log('menu c', c);
-
     let button;
     if (renderButton)
         button = renderButton(show, setShow, tt, c, bgc);
@@ -88,15 +86,19 @@ export const Menu = ({
 
     return (
         <Fragment>
-            <div
-                className={`xburgerTouchOutsideSensor ${show ? ' show' : ''}`}
-                onClick={() => setShow(false)}
-                style={{
-                    transition: `opacity ${tt}ms ease-out`,
-                    zIndex: zi,
-                    backgroundColor: bdc
-                }}
-            />
+            {
+                !fullSlider && !fader && (
+                <div
+                    className={`xburgerTouchOutsideSensor ${show ? ' show' : ''}`}
+                    onClick={() => setShow(false)}
+                    style={{
+                        transition: `opacity ${tt}ms ease-out`,
+                        zIndex: zi,
+                        backgroundColor: bdc
+                    }}
+                />
+                )
+            }
             {button}
             {container}
         </Fragment>
