@@ -1,0 +1,23 @@
+{
+  "name": "grevlingui",
+  "version": "0.0.1",
+  "description": "GUI elements",
+  "main": "index.jsx",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sGrevling/gui"
+  },
+  "keywords": [
+    "react",
+    "gui",
+    "gui elements",
+    "menu",
+    "buttons",
+    "checkbox",
+    "toggle",
+    "drawer",
+    "mobile"
+  ],
+  "author": "Sigve Grevling",
+  "license": "MIT"
+}
