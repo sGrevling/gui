@@ -8,12 +8,12 @@ export const Menu = ({
                   children,
                   onCloseClickOverride,
                   shouldCloseOnClick,
-                  transitionTime,
-                  zIndex,
+                  transitionTime = 300,
+                  zIndex = 2,
                   color,
                   bgColor,
                   menuBgColor,
-                  backdropColor,
+                  backdropColor = '#e3e6e850',
                   settings,
                   renderButton,
                   className,
@@ -22,28 +22,23 @@ export const Menu = ({
                   left
               }) => {
     const [show, setShow] = useState(false);
-    const tt = transitionTime ?? 400,
-        zi = zIndex ?? 2,
-        c = color,
-        bgc = bgColor,
-        bdc = backdropColor ?? '#e3e6e850';
 
     let button;
     if (renderButton)
-        button = renderButton(show, setShow, tt, c, bgc);
+        button = renderButton(show, setShow, transitionTime, color, bgColor);
     else {
         const Button = settings ? SettingsButton : MenuButton;
         button = <Button
             className={`button ${left ? 'left' : ''}`}
             open={!!(show || onCloseClickOverride)}
             setOpen={setShow}
-            transitionTime={tt * .6}
-            stageDelay={tt * .1}
-            c={c}
+            transitionTime={transitionTime * .6}
+            stageDelay={transitionTime * .1}
+            color={color}
             backgroundColor={bgColor}
             styles={{
-                zIndex: zi + 2,
-                backgroundColor: bgc
+                zIndex: zIndex + 2,
+                backgroundColor: bgColor
             }}
             // rounding={2}
         />
@@ -52,9 +47,9 @@ export const Menu = ({
     let container;
 
     const style = {
-        zIndex: zi + 1,
-        color: c,
-        backgroundColor: menuBgColor ?? bgc
+        zIndex: zIndex + 1,
+        color,
+        backgroundColor: menuBgColor ?? bgColor
     }
 
     if (fader)
@@ -64,7 +59,7 @@ export const Menu = ({
                 onClick={(e) => shouldCloseOnClick && shouldCloseOnClick(e) && setShow(false)}
                 style={{
                     ...style,
-                    transition: `opacity ${tt}ms ease-out`,
+                    transition: `opacity ${transitionTime}ms ease-out`,
                 }}
             >
                 {children}
@@ -77,7 +72,7 @@ export const Menu = ({
                 onClick={(e) => shouldCloseOnClick && shouldCloseOnClick(e) && setShow(false)}
                 style={{
                     ...style,
-                    transition: `left ${tt}ms ease-out, right ${tt}ms ease-out`,
+                    transition: `left ${transitionTime}ms ease-out, right ${transitionTime}ms ease-out`,
                 }}
             >
                 {children}
@@ -92,9 +87,9 @@ export const Menu = ({
                     className={`xburgerTouchOutsideSensor ${show ? ' show' : ''}`}
                     onClick={() => setShow(false)}
                     style={{
-                        transition: `opacity ${tt}ms ease-out`,
-                        zIndex: zi,
-                        backgroundColor: bdc
+                        transition: `opacity ${transitionTime}ms ease-out`,
+                        zIndex,
+                        backgroundColor: backdropColor
                     }}
                 />
                 )

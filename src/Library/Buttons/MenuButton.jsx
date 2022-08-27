@@ -4,10 +4,10 @@ import {useState} from "react";
 export const MenuButton = ({
                                open,
                                setOpen,
-                               transitionTime,
-                               c,
+                               transitionTime = 300,
+                               stageDelay = 100,
+                               color,
                                backgroundColor,
-                               stageDelay,
                                styles,
                                className
                            }) => {
@@ -21,7 +21,7 @@ export const MenuButton = ({
                 transitionDelay: (open && center) || !(open || center) ? '' : `${stageDelay}ms`,
             }}
             d={open ? d2 : d1}
-            fill={c}
+            fill={color}
             className={'mainShape'}
         />
     )

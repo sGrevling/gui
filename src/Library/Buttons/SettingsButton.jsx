@@ -5,9 +5,9 @@ export const SettingsButton = ({
                                    open,
                                    setOpen,
                                    transitionTime = 300,
-                                   c,
+                                   stageDelay = 100,
+                                   color = 'white',
                                    backgroundColor,
-                                   stageDelay,
                                    styles,
                                    className,
                                    rounding = 7
@@ -23,20 +23,20 @@ export const SettingsButton = ({
             x={animate && open ? 40 : 0}
             y="41"
             height="18"
-            fill={c ?? 'white'}
+            fill={color}
             width={animate && open ? 20 : 100}
             transform={`rotate(${deg} 50 50)`}
             rx={rounding}
         />
     )
-    const getCircle = (r, color) => (
+    const getCircle = (r, c) => (
         <circle
             style={{
                 transitionProperty: 'r',
                 transitionDuration: `${transitionTime}ms`,
                 transitionDelay: open ? `${stageDelay}ms` : ''
             }}
-            fill={color ?? 'black'}
+            fill={c ?? 'black'}
             cx="50" cy="50" r={r}
         />
     )
@@ -64,7 +64,7 @@ export const SettingsButton = ({
                     {getRekt(45)}
                     {getRekt(90, true)}
                     {getRekt(135)}
-                    {getCircle(rArray[1], c ?? 'white')}
+                    {getCircle(rArray[1], color)}
                 </g>
             </svg>
 
