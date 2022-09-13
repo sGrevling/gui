@@ -17,7 +17,6 @@
   },
   "scripts": {
     "start": "PORT=3333 BROWSER=NONE react-scripts start",
-    "clear-dist": "rm -rf dist",
     "build": "rm -rf dist && NODE_ENV=production babel src/Library --out-dir dist --copy-files",
     "publish": "npm run build && cp README.md dist/README.md && cd dist && npm publish"
   },

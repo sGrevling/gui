@@ -3,7 +3,8 @@ import {useState} from "react";
 
 import badger from "./badger.jpeg";
 import {CheckBox, Menu, RadioGroup, ToggleSwitch} from "./Library";
-import {Loader} from "./Library/Loader/Loader";
+import {NumberSelect} from "./Library/NumberSelect/NumberSelect";
+import {Dots} from "./Library/Dots/Dots";
 
 const getColors = (key) => {
     switch(key) {
@@ -31,6 +32,7 @@ function App() {
     const [showColorSelect, setShowColorSelect] = useState(false);
     const [showMenu, setShowMenu] = useState(false);
     const [grevling, setGrevling] = useState(false);
+    const [num, setNum] = useState(3);
 
     const { main, contrast } = getColors(color);
 
@@ -106,10 +108,39 @@ function App() {
                         grevling ? (
                             <img src={badger} alt="badger"/>
                         ) : (
-                            <Loader color={contrast} size={'400px'}/>
+                            <div
+                                style={{
+                                    // width: '80%',
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    alignItems: 'center',
+                                    justifyContent: 'center'
+                                }}
+                            >
+                            <div
+
+                            >
+                                <Dots
+                                    num={num}
+                                    size={20}
+                                />
+                            </div>
+
+                                <br/>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <NumberSelect
+                                    value={num}
+                                    setValue={setNum}
+                                    max={9}
+                                    size={80}
+                                />
+                            </div>
                         )
                     }
-            </div>
+
+                </div>
         </div>
         </div>
     );

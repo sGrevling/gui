@@ -1,4 +1,5 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
+import useEffectOnce from "../utils/UseEffectOnce";
 
 export const Loader = ({
                            color = 'black',
@@ -24,7 +25,7 @@ export const Loader = ({
     const [innerState, setInnerState] = useState()
     const [outerState, setOuterState] = useState(getRandomStyle(0))
 
-    useEffect(() => {
+    useEffectOnce(() => {
         const boop = (func, prevRot, slower) => {
             const thing = getRandomStyle(prevRot, slower);
             func(thing);
