@@ -1,7 +1,7 @@
 import React from 'react';
 import './Dots.css';
 
-export const Dots = ({ num }) => {
+export const Dots = ({ num, color }) => {
 
     const grids = [
         [],
@@ -24,6 +24,7 @@ export const Dots = ({ num }) => {
         <div
             key={`dot-${i}`}
             className="dot"
+            style={{backgroundColor: color ?? 'black'}}
         />
     ) : <div key={`dot-${i}`}/>;
 

@@ -5,9 +5,10 @@ import badger from "./badger.jpeg";
 import {CheckBox, Menu, RadioGroup, ToggleSwitch} from "./Library";
 import {NumberSelect} from "./Library/NumberSelect/NumberSelect";
 import {Dots} from "./Library/Dots/Dots";
+import {ResetButton} from "./Library/Buttons/ResetButton";
 
 const getColors = (key) => {
-    switch(key) {
+    switch (key) {
         case 'blue':
             return {
                 main: '#adc3ff',
@@ -32,9 +33,9 @@ function App() {
     const [showColorSelect, setShowColorSelect] = useState(false);
     const [showMenu, setShowMenu] = useState(false);
     const [grevling, setGrevling] = useState(false);
-    const [num, setNum] = useState(3);
+    const [num, setNum] = useState(1);
 
-    const { main, contrast } = getColors(color);
+    const {main, contrast} = getColors(color);
 
     const renderColorRadio = () => (
         <div className={`radioContainer ${showColorSelect ? '' : 'hidden'}`}>
@@ -110,27 +111,43 @@ function App() {
                         ) : (
                             <div
                                 style={{
-                                    // width: '80%',
                                     display: 'flex',
                                     flexDirection: 'column',
                                     alignItems: 'center',
                                     justifyContent: 'center'
                                 }}
                             >
-                            <div
+                                <div
+                                    style={{
+                                        position: 'absolute',
+                                        top: '1rem',
+                                        right: '1rem',
 
-                            >
-                                <Dots
-                                    num={num}
-                                    size={20}
-                                />
-                            </div>
+                                    }}
+                                >
+                                    <ResetButton
+                                        color={main}
+                                        backgroundColor={contrast}
+                                        onClick={() => setNum(1)}
+                                    />
+                                </div>
+                                <div>
+                                    <Dots
+                                        num={num}
+                                        size={20}
+                                        color={contrast}
+                                    />
+                                </div>
 
                                 <br/>
                                 <br/>
                                 <br/>
                                 <br/>
                                 <NumberSelect
+                                    color={'white'}
+                                    numberBgColor={main}
+                                    selectorColor={contrast}
+                                    shadow
                                     value={num}
                                     setValue={setNum}
                                     max={9}
@@ -141,7 +158,7 @@ function App() {
                     }
 
                 </div>
-        </div>
+            </div>
         </div>
     );
 }

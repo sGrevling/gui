@@ -1,13 +1,64 @@
+.settingsButton,
+.resetButton {
+    outline: none;
+    background: none;
+    border: none;
+}
+
+.resetButton,
 .settingsButton {
     height: 50px;
     width: 50px;
     padding: 10px;
     border-radius: 10px;
-    background: none;
-    border: none;
 }
 
 .settingsButton svg {
     height: 100%;
     width: 100%;
+}
+
+.resetButton {
+    padding: 5px;
+}
+
+.resetButton svg {
+    height: 40px;
+    width: 40px;
+}
+
+@-ms-keyframes spinCC {
+    from {
+        -ms-transform: rotate(0deg);
+    }
+    to {
+        -ms-transform: rotate(-360deg);
+    }
+}
+
+@-moz-keyframes spinCC {
+    from {
+        -moz-transform: rotate(0deg);
+    }
+    to {
+        -moz-transform: rotate(-360deg);
+    }
+}
+
+@-webkit-keyframes spinCC {
+    from {
+        -webkit-transform: rotate(0deg);
+    }
+    to {
+        -webkit-transform: rotate(-360deg);
+    }
+}
+
+@keyframes spinCC {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(-360deg);
+    }
 }

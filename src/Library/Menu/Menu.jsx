@@ -31,7 +31,12 @@ export const Menu = ({
         button = <Button
             className={`button ${left ? 'left' : ''}`}
             open={!!(show || onCloseClickOverride)}
-            setOpen={setShow}
+            setOpen={v => {
+                if (onCloseClickOverride)
+                    onCloseClickOverride();
+                else
+                    setShow(v)
+            }}
             transitionTime={transitionTime}
             stageDelay={transitionTime * .3}
             color={color}

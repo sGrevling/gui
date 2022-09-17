@@ -3,8 +3,6 @@
     display: grid;
     grid-template-columns: repeat(3, 2rem);
     grid-template-rows: repeat(3, 2rem);
-
-    /*transform: rotate(45deg);*/
     height: 6rem;
     width: 6rem;
 }
@@ -13,5 +11,4 @@
     width: 1.6rem;
     height: 1.6rem;
     border-radius: 100%;
-    background-color: black;
 }
