@@ -1,44 +1,64 @@
 import './App.css';
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 import badger from "./badger.jpeg";
-import {CheckBox, Menu, RadioGroup, ToggleSwitch} from "./Library";
-import {NumberSelect} from "./Library/NumberSelect/NumberSelect";
-import {Dots} from "./Library/Dots/Dots";
-import {ResetButton} from "./Library/Buttons/ResetButton";
+import {CheckBox, Menu, RadioGroup, ToggleSwitch, NumberSelect, Dots, ResetButton, SunMoon} from "./Library";
 
-const getColors = (key) => {
-    switch (key) {
-        case 'blue':
-            return {
-                main: '#adc3ff',
-                contrast: '#001c6d'
-            }
-        case 'red':
-            return {
-                main: '#ffb9bd',
-                contrast: '#680009'
-            }
-        default:
-            return {
-                main: '#d2b9ff',
-                contrast: '#31008e'
-            }
+const colorMap = {
+    blue: [
+        '#adc3ff',
+        '#001c6d'
+    ],
+    red: [
+        '#ffb9bd',
+        '#680009'
+    ],
+    pretty: [
+        '#d2b9ff',
+        '#31008e'
+    ]
+}
+
+const getColors = (key, lm) => {
+    let c = colorMap[key] ?? colorMap.pretty;
+    return {
+        main: c[lm ? 0 : 1],
+        contrast: c[lm ? 1 : 0],
     }
 }
 
 
 function App() {
-    const [color, setColor] = useState('blue');
+    const [color, setColor] = useState(localStorage.getItem('grevlingui.color') ?? 'blue');
     const [showColorSelect, setShowColorSelect] = useState(false);
     const [showMenu, setShowMenu] = useState(false);
     const [grevling, setGrevling] = useState(false);
+    const [lightMode, setLightMode] = useState(JSON.parse(localStorage.getItem('grevlingui.lightMode')));
     const [num, setNum] = useState(1);
+    const [colors, setColors] = useState({main: 'white', contrast: 'black'});
 
-    const {main, contrast} = getColors(color);
+    const {main, contrast} = colors;
+
+    useEffect(() => {
+    }, [lightMode])
+
+    useEffect(() => {
+        localStorage.setItem('grevlingui.color', color)
+    }, [color])
+
+    useEffect(() => {
+        setColors(getColors(color, lightMode));
+    }, [lightMode, color])
 
     const renderColorRadio = () => (
         <div className={`radioContainer ${showColorSelect ? '' : 'hidden'}`}>
+            <div
+                className="sunMoonContainer"
+                onClick={() => setLightMode(lm => !lm)}
+            >
+                <SunMoon sun={lightMode}/>
+            </div>
+            <br/>
             <RadioGroup
                 onSelect={setColor}
                 selected={color}
@@ -53,7 +73,7 @@ function App() {
     );
 
     return (
-        <div className={`App ${color}`}>
+        <div className={`App ${color} ${lightMode ? 'lightMode' : ''}`}>
             <div className="contentWrapper">
                 <div className={`menuContainer ${showMenu ? '' : 'hidden'}`}>
                     <Menu
@@ -99,7 +119,6 @@ function App() {
                         />
                         <br/>
                         <br/>
-                        <br/>
                         {renderColorRadio()}
                     </div>
                 </Menu>
@@ -139,13 +158,12 @@ function App() {
                                         color={contrast}
                                     />
                                 </div>
-
                                 <br/>
                                 <br/>
                                 <br/>
                                 <br/>
                                 <NumberSelect
-                                    color={'white'}
+                                    color={lightMode ? 'white' : 'black'}
                                     numberBgColor={main}
                                     selectorColor={contrast}
                                     shadow

@@ -12,16 +12,31 @@ button {
 }
 
 .App.blue {
+  --contrast: #adc3ff;
+  --main: #001c6d;
+}
+
+.App.red {
+  --contrast: #ffb9bd;
+  --main: #680009;
+}
+
+.App.pretty {
+  --contrast: #d2b9ff;
+  --main: #31008e;
+}
+
+.App.blue.lightMode {
   --main: #adc3ff;
   --contrast: #001c6d;
 }
 
-.App.red {
+.App.red.lightMode {
   --main: #ffb9bd;
   --contrast: #680009;
 }
 
-.App.pretty {
+.App.pretty.lightMode {
   --main: #d2b9ff;
   --contrast: #31008e;
 }
@@ -93,8 +108,19 @@ button {
 
   overflow: hidden;
 
-  height: 165px;
+  height: 215px;
   opacity: 1;
+}
+
+.sunMoonContainer {
+  margin-left: 8px;
+  height: 40px;
+  width: 40px;
+  background-color: black;
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .radioContainer.hidden {
