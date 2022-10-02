@@ -133,6 +133,7 @@ function App() {
                                 </div>
                                 <div>
                                     <Dots
+                                        version={2}
                                         num={num}
                                         size={20}
                                         color={contrast}
