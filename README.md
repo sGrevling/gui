@@ -20,7 +20,7 @@ Some are passed down to child components
 - onCloseClickOverride
   - callback function allowing reuse of close menu button
 - shouldCloseOnClick 
-  - callback function to "validete" whether the click should cause the menu to close 
+  - callback function to "validate" whether the click should cause the menu to close 
 - transitionTime
   - default 400
 - zIndex
