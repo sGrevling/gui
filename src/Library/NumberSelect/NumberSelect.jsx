@@ -1,12 +1,8 @@
-import React, {useState} from 'react';
+import React, {useLayoutEffect, useState} from 'react';
 import './NumberSelect.css';
 import useEffectPartialDeps from "../utils/UseEffectPartialDeps";
-import useEffectOnce from "../utils/UseEffectOnce";
 
-const scrollRef = React.createRef();
-const refs = [];
-
-let timeout1, timeout2;
+const cosmos = {};
 
 export const NumberSelect = ({
                                  value,
@@ -24,30 +20,43 @@ export const NumberSelect = ({
                                  pointerShadowColor = '#33333390',
                                  top = -16
                              }) => {
+    const [id] = useState(`id-${Math.random()}`);
+    const [rendered, setRendered] = useState(false);
     const [showInput, setShowInput] = useState(false);
     const [hidden, setHidden] = useState(false);
 
-    console.log('');
-    console.log('showInput: ', showInput);
-    console.log('hidden: ', hidden);
+    const [timeout1, setTimeout1] = useState(0);
+    const [timeout2, setTimeout2] = useState(0);
 
     const options = [...Array(Math.max((max - min) + 1, 1)).keys()].map(v => v + min);
 
-    const getExactValue = () => scrollRef.current.scrollLeft / (size) + min;
+    let cosmoState = cosmos[id] ;
+
+    useLayoutEffect(() => {
+        cosmoState = cosmos[id] = {
+            refs: []
+        }
+        setRendered(true);
+    }, [])
 
     useEffectPartialDeps(() => {
         clearTimeout(timeout1);
         if (showInput)
             setHidden(false);
         else
-            timeout1 = setTimeout(() => setHidden(true), 320)
+            setTimeout1(setTimeout(() => setHidden(true), 320))
     }, [showInput])
 
-    useEffectOnce(() => {
-        const ref = refs[value + 2 - min];
+    useEffectPartialDeps(() => {
+        if (!rendered) return;
+        const ref = cosmoState.refs[value + 2 - min];
         if (!ref) return;
         ref.scrollIntoView();
-    })
+    }, [rendered])
+
+    if (!cosmoState) return <div/>
+
+    const getExactValue = () => cosmoState.scrollRef.scrollLeft / (size) + min;
 
     if (max - min === 0) return <></>;
 
@@ -90,7 +99,7 @@ export const NumberSelect = ({
             }}
             onTouchEnd={() => {
                 clearTimeout(timeout2);
-                timeout2 = setTimeout(() => setShowInput(false), 800)
+                setTimeout2(setTimeout(() => setShowInput(false), 800))
 
             }}
         >
@@ -125,7 +134,7 @@ export const NumberSelect = ({
             </div>
             <div
                 className={`scrollSelector ${thin ? 'thin' : ''}`}
-                ref={scrollRef}
+                ref={node => cosmoState.scrollRef = node}
                 style={{width: `${size * 3}px`}}
                 onScroll={() => {
                     const centerNumber = Math.round(getExactValue());
@@ -138,7 +147,7 @@ export const NumberSelect = ({
                 >
                     <div
                         className="option" style={optionStyle}
-                        ref={node => refs[0] = node}
+                        ref={node => cosmoState.refs[0] = node}
                     />
                     {options.map((n, i) => (
                             <div
@@ -147,7 +156,7 @@ export const NumberSelect = ({
                                     backgroundColor: value === n ? numberBgColor : ''
                                 }}
                                 key={n}
-                                ref={node => refs[i + 1] = node}
+                                ref={node => cosmoState.refs[i + 1] = node}
                                 className={'option'}
                             >
                                 {n}
@@ -157,7 +166,7 @@ export const NumberSelect = ({
                     <div
                         className="option"
                         style={optionStyle}
-                        ref={node => refs[options.length + 1] = node}
+                        ref={node => cosmoState.refs[options.length + 1] = node}
                     />
                 </div>
             </div>
