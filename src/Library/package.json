@@ -1,6 +1,6 @@
 {
   "name": "grevlingui",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "description": "GUI elements",
   "main": "index.jsx",
   "repository": {
