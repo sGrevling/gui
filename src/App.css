@@ -74,13 +74,16 @@ button {
 
 .content {
   position: relative;
-  height: calc(100% - 40px);
-  width: calc(100% - 40px);
-  padding: 20px 20px;
+  height: 100%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+
+.content > img {
+  max-width: 100%;
 }
 
 .settingsContainer,
@@ -137,3 +140,21 @@ button {
   margin: 10px;
 }
 
+.badgerFrame {
+  --size: min(400px, min( 90vh, 90vw));
+  width: var(--size);
+  height: var(--size);
+
+  background-color: red;
+  border-radius: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden
+}
+
+.badgerFrame img {
+  margin-top: calc(var(--size) * 0.15);
+  height: calc(var(--size) * 1.2);
+}

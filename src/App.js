@@ -3,6 +3,8 @@ import {useEffect, useState} from "react";
 
 import badger from "./badger.jpeg";
 import {CheckBox, Menu, RadioGroup, ToggleSwitch, NumberSelect, Dots, ResetButton, SunMoon} from "./Library";
+import {PaneView} from "./Library";
+import {Loader} from "./Library/Loader/Loader";
 
 const colorMap = {
     blue: [
@@ -72,6 +74,60 @@ function App() {
         </div>
     );
 
+    const renderContent = content =>
+        <div className="content">{content}</div>
+
+    const renderDominos = () => (
+        <div
+            style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center'
+            }}
+        >
+            <div>
+                <Dots
+                    version={2}
+                    num={num}
+                    size={20}
+                    color={contrast}
+                />
+            </div>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <NumberSelect
+                color={lightMode ? 'white' : 'black'}
+                shadow
+                value={num}
+                setValue={setNum}
+                max={9}
+                size={80}
+            />
+            <br/>
+            <br/>
+            <ResetButton
+                color={main}
+                backgroundColor={contrast}
+                onClick={() => setNum(1)}
+            />
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+        </div>
+    )
+
+    const panes = [renderContent(<Loader color={contrast}/>), renderContent(renderDominos())];
+    if (grevling)
+    panes.push(renderContent(
+        <div className="badgerFrame">
+            <img src={badger} alt="badger"/>
+        </div>
+    ));
+
     return (
         <div className={`App ${color} ${lightMode ? 'lightMode' : ''}`}>
             <div className="contentWrapper">
@@ -122,61 +178,10 @@ function App() {
                         {renderColorRadio()}
                     </div>
                 </Menu>
+                <PaneView>
+                    {panes}
+                </PaneView>
 
-                <div className="content">
-                    {
-                        grevling ? (
-                            <img src={badger} alt="badger"/>
-                        ) : (
-                            <div
-                                style={{
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                    alignItems: 'center',
-                                    justifyContent: 'center'
-                                }}
-                            >
-                                <div
-                                    style={{
-                                        position: 'absolute',
-                                        top: '1rem',
-                                        right: '1rem',
-
-                                    }}
-                                >
-                                    <ResetButton
-                                        color={main}
-                                        backgroundColor={contrast}
-                                        onClick={() => setNum(1)}
-                                    />
-                                </div>
-                                <div>
-                                    <Dots
-                                        version={2}
-                                        num={num}
-                                        size={20}
-                                        color={contrast}
-                                    />
-                                </div>
-                                <br/>
-                                <br/>
-                                <br/>
-                                <br/>
-                                <NumberSelect
-                                    color={lightMode ? 'white' : 'black'}
-                                    numberBgColor={main}
-                                    selectorColor={contrast}
-                                    shadow
-                                    value={num}
-                                    setValue={setNum}
-                                    max={9}
-                                    size={80}
-                                />
-                            </div>
-                        )
-                    }
-
-                </div>
             </div>
         </div>
     );

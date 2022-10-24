@@ -1,61 +1,30 @@
-import React, {useState} from 'react';
-import useEffectOnce from "../utils/UseEffectOnce";
+import React from 'react';
+import './Loader.css';
 
 export const Loader = ({
                            color = 'black',
-                           size = '100',
-                           slowness = 0
+                           size = '10rem',
+                           // size = 'min(80vw, 80vh)',
+
+                           speed = 5000,
                        }) => {
-    const getRandomStyle = (prevRotation, slower) => {
-        const time = (Math.random() * 500) + 1000 + slowness + (slower ? 1000 : 0);
-        const rotationChange = ((Math.random() * 150) + 50) * (Math.random() > 0.2 ? 1 : -1);
-        const rotation = prevRotation + rotationChange;
-        return {
-            time,
-            rotation,
-            transform: `rotate(${rotation}, 50,  71.1)`,
-            style: {
-                transitionProperty: 'transform',
-                transitionDuration: `${time}ms`,
-                transitionTimingFunction: 'linear'
-            }
-        }
-    }
-
-    const [innerState, setInnerState] = useState()
-    const [outerState, setOuterState] = useState(getRandomStyle(0))
-
-    useEffectOnce(() => {
-        const boop = (func, prevRot, slower) => {
-            const thing = getRandomStyle(prevRot, slower);
-            func(thing);
-            setTimeout(() => {
-                boop(func, thing.rotation, slower)
-            }, thing.time + 300)
-        }
-        boop(setInnerState, 0);
-        boop(setOuterState, 0, true);
-
-    }, [])
-
+    const spin = (cc) => ({
+        WebkitAnimation: `spin${cc?'CC':''} ${speed}ms linear infinite`,
+        MozAnimation: `spin${cc?'CC':''} ${speed}ms linear infinite`,
+        animation: `spin${cc?'CC':''} ${speed}ms linear infinite`,
+    })
     return (
         <svg
-            className={'icon'}
+            className="grevloadinger"
             xmlns="http://www.w3.org/2000/svg"
-            viewBox="-2 -2 27.7 27.7"
+            viewBox="-8.5 12.5 117 117"
             height={size}
             width={size}
+            style={spin()}
         >
-            <g transform="scale(.2) translate(10, -11)">
                 <mask id="spinnyMask1">
                     <rect x="-10" y="0" width="200" height="200" fill="white"/>
-                    <polygon
-                        points="50 13.397, 100 100, 0 100"
-                        fill="black"
-
-                        transform={outerState.transform}
-                        style={outerState.style}
-                    />
+                    <polygon points="50 13.397, 100 100, 0 100" fill="black"/>
                 </mask>
                 <circle
                     cx="50"
@@ -64,14 +33,17 @@ export const Loader = ({
                     mask="url(#spinnyMask1)"
                     fill={color}
                 />
+            <g transform="rotate(45 50 71)">
                 <rect
                     height="40.8"
                     width="40.8"
                     x="29.6"
                     y="50.6"
                     fill={color}
-                    transform={innerState?.transform}
-                    style={innerState?.style}
+                    style={{
+                        transformOrigin: '50px 71px',
+                        ...spin(true)
+                    }}
                 />
             </g>
         </svg>

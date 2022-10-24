@@ -1,0 +1,31 @@
+.grevlingPaneView {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: auto;
+    scroll-snap-type: x mandatory;
+
+    -ms-overflow-style: none; /* for Internet Explorer, Edge */
+    scrollbar-width: none; /* for Firefox */
+    overflow-y: scroll;
+}
+
+.grevlingPaneView::-webkit-scrollbar {
+    display: none; /* for Chrome, Safari, and Opera */
+}
+
+.grevlingPaneViewScrollyContent {
+    height: 100%;
+    width: 100%;
+    display: flex;
+}
+
+.grevlingPaneViewPane {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+
+    max-height: 100%;
+    min-width: 100%;
+}
