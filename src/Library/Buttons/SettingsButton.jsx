@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './Buttons.css'
 
 export const SettingsButton = ({
@@ -12,7 +12,8 @@ export const SettingsButton = ({
                                    className,
                                    rounding = 7
                                }) => {
-    const rArray = open ? [0, 0] : [20, 35]
+    const [randomId] = useState(Math.random());
+    const rArray = open ? [0, 0] : [20, 35];
     const getRekt = (deg, animate) => (
         <rect
             style={{
@@ -55,11 +56,11 @@ export const SettingsButton = ({
                 viewBox="0 0 100 100"
                 xmlns="http://www.w3.org/2000/svg"
             >
-                <mask id="gearMask">
+                <mask id={`gearMask${randomId}`}>
                     <rect x="0" y="0" height="100" width="100" fill="white"/>
                     {getCircle(rArray[0])}
                 </mask>
-                <g mask="url(#gearMask)" id="settingsButtonShapes">
+                <g mask={`url(#gearMask${randomId})`} id="settingsButtonShapes">
                     {getRekt(0, true)}
                     {getRekt(45)}
                     {getRekt(90, true)}
