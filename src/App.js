@@ -101,7 +101,6 @@ function App() {
             <br/>
             <br/>
             <NumberSelect
-                shadow
                 value={num}
                 setValue={setNum}
                 max={9}

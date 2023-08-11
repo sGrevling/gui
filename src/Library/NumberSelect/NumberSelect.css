@@ -4,24 +4,36 @@
     position: relative;
 }
 
+.numberSelect_editing {
+    z-index: 2;
+}
+
 .numberSelect_value {
     position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 100%;
-    z-index: 3;
+    z-index: 2;
+}
+
+.numberSelect_input {
+    opacity: 1;
+    transition: opacity 300ms linear;
+}
+
+.numberSelect_input-hidden {
+    opacity: 0;
+    pointer-events: none;
 }
 
 .numberSelect_increment {
     border-radius: 100%;
     position: absolute;
-    z-index: 2;
+    z-index: 3;
 }
 
 .numberSelect_blur {
     position: absolute;
-    opacity: .5;
-    /*background: radial-gradient(#1E90FFFF, #1E90FFFF, #1E90FF00, #1E90FF00, #1E90FF00);*/
     z-index: 1;
 }

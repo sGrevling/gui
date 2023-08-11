@@ -10,12 +10,21 @@ export const NumberSelect = ({
                                  color = 'white',
                                  numberBgColor = '#663399',
                                  selectorColor = '#1E90FF',
-                                 pointerShadowColor = '#33333390',
-                                 top = -16
+                                 timeout = 1000
                              }) => {
     const [editing, setEditing] = useState(false);
+    const [closeTimeout, setCloseTimeout] = useState();
 
-
+    const startTimeout = () => {
+        if (!timeout) return;
+        clearTimeout(closeTimeout)
+        setCloseTimeout(
+            setTimeout(() => {
+            setEditing(false);
+            setCloseTimeout(undefined);
+        }, timeout)
+        )
+    }
 
     const fullSize = `${size}rem`;
     const incrementorSize = `${size * .8}rem`;
@@ -43,7 +52,7 @@ export const NumberSelect = ({
 
 
     const blurStyle = {
-        background: `radial-gradient(${selectorColor}FF, ${selectorColor}FF, ${selectorColor}00, ${selectorColor}00, ${selectorColor}00)`,
+        background: `radial-gradient(${numberBgColor}FF, ${numberBgColor}00, ${numberBgColor}00)`,
         left: minusHalfSize,
         right: minusHalfSize,
         top: incrementorVerticalOffset,
@@ -62,17 +71,17 @@ export const NumberSelect = ({
         </svg>
     )
 
-    const increment = (change) => () =>
-        setValue(pv => {
-            const nv = change + pv;
-            return (nv > max || nv < min) ? pv : nv;
-
-        })
+    const increment = (change) => () => {
+        startTimeout();
+        const nv = change + value;
+        if (nv > max || nv < min) return;
+        setValue(nv);
+    }
 
     const renderInputs = () => (
-        <>
+        <div className={`numberSelect_input ${editing ? '' : 'numberSelect_input-hidden'}`}>
             <div
-                className="numberSelect_increment numberSelect_add"
+                className={`numberSelect_increment numberSelect_add ${editing ? 'numberSelect_editing' : ''}`}
                 style={addStyle}
                 onClick={increment(1)}
             >
@@ -86,7 +95,7 @@ export const NumberSelect = ({
             >
                 {icon()}
             </div>
-        </>
+        </div>
     )
 
     return (
@@ -94,7 +103,11 @@ export const NumberSelect = ({
 
             <div
                 className="numberSelect_value"
-                onClick={() => setEditing((pv) => !pv)}
+                onClick={() => {
+                    if (!editing)
+                        startTimeout();
+                    setEditing(!editing)
+                }}
                 style={{
                     height: fullSize,
                     width: fullSize,
@@ -105,7 +118,7 @@ export const NumberSelect = ({
             >
                 {value}
             </div>
-            {editing && renderInputs()}
+            {renderInputs()}
         </div>
     );
 }
