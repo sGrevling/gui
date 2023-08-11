@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './NumberSelect.css';
 
 export const NumberSelect = ({
@@ -10,19 +10,28 @@ export const NumberSelect = ({
                                  color = 'white',
                                  numberBgColor = '#663399',
                                  selectorColor = '#1E90FF',
-                                 timeout = 1000
+                                 timeout = 1000,
+                                 closed
                              }) => {
     const [editing, setEditing] = useState(false);
     const [closeTimeout, setCloseTimeout] = useState();
 
+    useEffect(() => {
+        if (closed)
+            close();
+    }, [closed])
+
+    const close = () => {
+        clearTimeout(closeTimeout)
+        setEditing(false);
+        setCloseTimeout(undefined);
+    }
+
     const startTimeout = () => {
         if (!timeout) return;
-        clearTimeout(closeTimeout)
+            clearTimeout(closeTimeout)
         setCloseTimeout(
-            setTimeout(() => {
-            setEditing(false);
-            setCloseTimeout(undefined);
-        }, timeout)
+            setTimeout(close, timeout)
         )
     }
 

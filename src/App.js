@@ -38,6 +38,7 @@ function App() {
     const [lightMode, setLightMode] = useState(JSON.parse(localStorage.getItem('grevlingui.lightMode')));
     const [num, setNum] = useState(1);
     const [colors, setColors] = useState({main: 'white', contrast: 'black'});
+    const [numberInputClosed, setNumberInputClosed] = useState(new Date());
 
     const {main, contrast} = colors;
 
@@ -104,6 +105,8 @@ function App() {
                 value={num}
                 setValue={setNum}
                 max={9}
+                closed={numberInputClosed}
+                timeout={2000}
             />
             <br/>
             <br/>
@@ -113,7 +116,10 @@ function App() {
             <ResetButton
                 color={main}
                 backgroundColor={contrast}
-                onClick={() => setNum(1)}
+                onClick={() => {
+                    setNum(1);
+                    setNumberInputClosed(new Date());
+                }}
             />
             <br/>
             <br/>
