@@ -10,6 +10,7 @@ import { CheckBox } from './CheckBox';
 import { Dots } from './Dots/Dots';
 import { SunMoon } from './SunMoon';
 import { ToggleSwitch } from './ToggleSwitch';
+import { NumberSliderSelect } from './NumberSliderSelect/NumberSliderSelect';
 import { NumberSelect } from './NumberSelect/NumberSelect';
 import { PaneView } from './PaneView/PaneView';
 
@@ -26,6 +27,7 @@ export {
     Dots,
     SunMoon,
     ToggleSwitch,
+    NumberSliderSelect,
     NumberSelect,
     PaneView
 };

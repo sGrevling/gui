@@ -1,191 +1,111 @@
-import React, {useLayoutEffect, useState} from 'react';
+import React, {useState} from 'react';
 import './NumberSelect.css';
-import useEffectPartialDeps from "../utils/UseEffectPartialDeps";
-
-const cosmos = {};
 
 export const NumberSelect = ({
                                  value,
                                  setValue,
-                                 flip,
-                                 thin,
                                  min = 1,
                                  max = 10,
-                                 shadow,
-                                 size = 40,
+                                 size = 5,
                                  color = 'white',
-                                 numberBgColor = '#663399FF',
-                                 selectorColor = '#1E90FFFF',
-                                 pointerColor = '#6c9fff',
+                                 numberBgColor = '#663399',
+                                 selectorColor = '#1E90FF',
                                  pointerShadowColor = '#33333390',
                                  top = -16
                              }) => {
-    const [id] = useState(`id-${Math.random()}`);
-    const [rendered, setRendered] = useState(false);
-    const [showInput, setShowInput] = useState(false);
-    const [hidden, setHidden] = useState(false);
+    const [editing, setEditing] = useState(false);
 
-    const [timeout1, setTimeout1] = useState(0);
-    const [timeout2, setTimeout2] = useState(0);
 
-    const options = [...Array(Math.max((max - min) + 1, 1)).keys()].map(v => v + min);
 
-    let cosmoState = cosmos[id] ;
+    const fullSize = `${size}rem`;
+    const incrementorSize = `${size * .8}rem`;
+    const incrementorVerticalOffset= `-${size * .9}rem`;
+    const incrementorHorizontalOffset= `${size * .1}rem`;
+    const minusHalfSize = `-${size /  3}rem`;
 
-    useLayoutEffect(() => {
-        cosmoState = cosmos[id] = {
-            refs: []
-        }
-        setRendered(true);
-    }, [])
+    const incrementorStyle = {
+        height: incrementorSize,
+        width: incrementorSize,
+        backgroundColor: selectorColor,
+        right: incrementorHorizontalOffset,
+        bottom: incrementorHorizontalOffset
+    }
 
-    useEffectPartialDeps(() => {
-        clearTimeout(timeout1);
-        if (showInput)
-            setHidden(false);
-        else
-            setTimeout1(setTimeout(() => setHidden(true), 320))
-    }, [showInput])
+    const addStyle = {
+        ...incrementorStyle,
+        top: incrementorVerticalOffset
+    }
 
-    useEffectPartialDeps(() => {
-        if (!rendered) return;
-        const ref = cosmoState.refs[value + 2 - min];
-        if (!ref) return;
-        ref.scrollIntoView();
-    }, [rendered])
-
-    if (!cosmoState) return <div/>
-
-    const getExactValue = () => cosmoState.scrollRef.scrollLeft / (size) + min;
-
-    if (max - min === 0) return <></>;
-
-    const optionStyle = {
-        width: `${size}px`,
-        height: `${size - 1}px`,
-        fontSize: `${size * .6}px`,
-        borderRadius: `${size}px`,
-        paddingBottom: '1px'
-    };
-
-    const renderFade = (side, direction) => (
-        <div
-            className={`fade ${side}`}
-            style={{
-                width: `${size * .8}px`,
-                backgroundImage: `linear-gradient(to ${direction}, ${selectorColor}, ${selectorColor} , #00000000)`
-            }}
-        />
-    )
-
-    const pointerContainerStyle = flip ? {
-        bottom: `-${size * .4}px`,
-        transform: 'rotate(180deg)'
-    } : {
-        top: `-${size / 2}px`,
+    const subtractStyle = {
+        ...incrementorStyle,
+        bottom: incrementorVerticalOffset
     }
 
 
-    const renderModal = () => (
-        <div
-            className={`inputModal ${showInput ? '' : 'hidden'} ${shadow ? 'shadow' : ''}`}
-            style={{
-                backgroundColor: selectorColor,
-                top: `${top + (thin ? 8 : 0)}px`
-            }}
-            onTouchStart={() => {
-                clearTimeout(timeout2);
-                setShowInput(true);
-            }}
-            onTouchEnd={() => {
-                clearTimeout(timeout2);
-                setTimeout2(setTimeout(() => setShowInput(false), 800))
+    const blurStyle = {
+        background: `radial-gradient(${selectorColor}FF, ${selectorColor}FF, ${selectorColor}00, ${selectorColor}00, ${selectorColor}00)`,
+        left: minusHalfSize,
+        right: minusHalfSize,
+        top: incrementorVerticalOffset,
+        bottom: incrementorVerticalOffset,
+    }
 
-            }}
+    const icon = (up) => (
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 -960 960 960"
+            fill={color}
         >
-            {renderFade('left', 'right')}
-            {renderFade('right', 'left')}
+            {up ?
+                <path d="m283-345-43-43 240-240 240 239-43 43-197-197-197 198Z"/> :
+                <path d="M480-345 240-585l43-43 197 198 197-197 43 43-240 239Z"/>}
+        </svg>
+    )
+
+    const increment = (change) => () =>
+        setValue(pv => {
+            const nv = change + pv;
+            return (nv > max || nv < min) ? pv : nv;
+
+        })
+
+    const renderInputs = () => (
+        <>
             <div
-                className="pointerContainer"
-                style={pointerContainerStyle}
+                className="numberSelect_increment numberSelect_add"
+                style={addStyle}
+                onClick={increment(1)}
             >
-                <div
-                    className="pointerShadow"
-                    style={{
-                        backgroundColor: pointerShadowColor,
-                        width: `${size / 2}px`,
-                        height: `${size * 0.8}px`,
-                        marginTop: `${size / 7}px`,
-                    }}
-                />
+                {icon(true)}
             </div>
+            <div className="numberSelect_blur" style={blurStyle}/>
             <div
-                className="pointerContainer"
-                style={pointerContainerStyle}
+                className="numberSelect_increment numberSelect_subtract"
+                style={subtractStyle}
+                onClick={increment(-1)}
             >
-                <div
-                    className="pointer"
-                    style={{
-                        backgroundColor: pointerColor,
-                        width: `${size / 2}px`,
-                        height: `${size * 0.8}px`
-                    }}
-                />
+                {icon()}
             </div>
-            <div
-                className={`scrollSelector ${thin ? 'thin' : ''}`}
-                ref={node => cosmoState.scrollRef = node}
-                style={{width: `${size * 3}px`}}
-                onScroll={() => {
-                    const centerNumber = Math.round(getExactValue());
-                    if (value !== centerNumber) setValue(centerNumber);
-                }}
-            >
-                <div
-                    className="options"
-                    style={{width: `${(options.length + 2) * size}px`}}
-                >
-                    <div
-                        className="option" style={optionStyle}
-                        ref={node => cosmoState.refs[0] = node}
-                    />
-                    {options.map((n, i) => (
-                            <div
-                                style={{
-                                    ...optionStyle,
-                                    backgroundColor: value === n ? numberBgColor : ''
-                                }}
-                                key={n}
-                                ref={node => cosmoState.refs[i + 1] = node}
-                                className={'option'}
-                            >
-                                {n}
-                            </div>
-                        )
-                    )}
-                    <div
-                        className="option"
-                        style={optionStyle}
-                        ref={node => cosmoState.refs[options.length + 1] = node}
-                    />
-                </div>
-            </div>
-        </div>
+        </>
     )
 
     return (
-        <div className={`numberSelectWrapper  ${hidden ? 'hidden' : ''}`}>
+        <div className="numberSelect">
+
             <div
-                className="numberSelect"
+                className="numberSelect_value"
+                onClick={() => setEditing((pv) => !pv)}
                 style={{
-                    ...optionStyle,
+                    height: fullSize,
+                    width: fullSize,
                     color,
-                    backgroundColor: numberBgColor
+                    backgroundColor: numberBgColor,
+                    fontSize: `${size / 2}rem`
                 }}
             >
                 {value}
-                {renderModal()}
             </div>
+            {editing && renderInputs()}
         </div>
     );
 }

@@ -98,14 +98,17 @@ function App() {
             <br/>
             <br/>
             <br/>
+            <br/>
+            <br/>
             <NumberSelect
-                color={lightMode ? 'white' : 'black'}
                 shadow
                 value={num}
                 setValue={setNum}
                 max={9}
-                size={80}
             />
+            <br/>
+            <br/>
+            <br/>
             <br/>
             <br/>
             <ResetButton
