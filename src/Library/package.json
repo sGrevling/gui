@@ -1,6 +1,6 @@
 {
   "name": "grevlingui",
-  "version": "0.1.28",
+  "version": "0.1.32",
   "description": "GUI elements",
   "module": "index.js",
   "dependencies": {

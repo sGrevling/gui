@@ -37,12 +37,15 @@ function App() {
     const [grevling, setGrevling] = useState(false);
     const [lightMode, setLightMode] = useState(JSON.parse(localStorage.getItem('grevlingui.lightMode')));
     const [num, setNum] = useState(1);
+    const [numClosed, setNumClosed] = useState(new Date());
+    const [num2, setNum2] = useState(1);
+    const [num2Closed, setNum2Closed] = useState(new Date());
     const [colors, setColors] = useState({main: 'white', contrast: 'black'});
-    const [numberInputClosed, setNumberInputClosed] = useState(new Date());
 
     const {main, contrast} = colors;
 
     useEffect(() => {
+        localStorage.setItem('grevlingui.lightMode', lightMode)
     }, [lightMode])
 
     useEffect(() => {
@@ -102,11 +105,23 @@ function App() {
             <br/>
             <br/>
             <NumberSelect
+                size={4}
                 value={num}
                 setValue={setNum}
                 max={9}
-                closed={numberInputClosed}
+                closed={numClosed}
                 timeout={2000}
+                onOpenInput={() => setNum2Closed(new Date())}
+            />
+            <br/>
+            <NumberSelect
+                size={4}
+                value={num2}
+                setValue={setNum2}
+                max={9}
+                closed={num2Closed}
+                timeout={2000}
+                onOpenInput={() => setNumClosed(new Date())}
             />
             <br/>
             <br/>
@@ -118,7 +133,6 @@ function App() {
                 backgroundColor={contrast}
                 onClick={() => {
                     setNum(1);
-                    setNumberInputClosed(new Date());
                 }}
             />
             <br/>

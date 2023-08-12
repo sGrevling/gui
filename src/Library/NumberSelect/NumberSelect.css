@@ -2,10 +2,14 @@
 
 .numberSelect {
     position: relative;
+    z-index: 2;
 }
 
 .numberSelect_editing {
-    z-index: 2;
+}
+
+.numberSelect_doneClosing {
+    z-index: 1;
 }
 
 .numberSelect_value {
@@ -19,7 +23,8 @@
 
 .numberSelect_input {
     opacity: 1;
-    transition: opacity 300ms linear;
+    z-index: 1;
+    transition: opacity 200ms linear;
 }
 
 .numberSelect_input-hidden {
@@ -30,10 +35,26 @@
 .numberSelect_increment {
     border-radius: 100%;
     position: absolute;
-    z-index: 3;
+    z-index: 2;
+    transition: top 200ms linear, bottom 200ms linear;
 }
 
 .numberSelect_blur {
     position: absolute;
+    pointer-events: none;
     z-index: 1;
+    opacity: 1;
+    transition: opacity 200ms linear;
+}
+
+.numberSelect_input-hidden .numberSelect_blur {
+    opacity: 0;
+}
+
+.numberSelect_add svg path {
+    translate: 0 -2rem;
+}
+
+.numberSelect_subtract svg path {
+    translate: 0 2rem;
 }

@@ -11,10 +11,13 @@ export const NumberSelect = ({
                                  numberBgColor = '#663399',
                                  selectorColor = '#1E90FF',
                                  timeout = 1000,
+                                 onOpenInput,
                                  closed
                              }) => {
     const [editing, setEditing] = useState(false);
+    const [doneClosing, setDoneClosing] = useState(true);
     const [closeTimeout, setCloseTimeout] = useState();
+    const [doneClosingTimeout, setDoneClosingTimeout] = useState();
 
     useEffect(() => {
         if (closed)
@@ -25,13 +28,24 @@ export const NumberSelect = ({
         clearTimeout(closeTimeout)
         setEditing(false);
         setCloseTimeout(undefined);
+        startDoneClosingTimeout();
     }
 
-    const startTimeout = () => {
+    const startCloseTimeout = () => {
         if (!timeout) return;
             clearTimeout(closeTimeout)
         setCloseTimeout(
             setTimeout(close, timeout)
+        )
+    }
+
+    const startDoneClosingTimeout = () => {
+        clearTimeout(doneClosingTimeout);
+        setDoneClosingTimeout(
+            setTimeout(() => {
+                setDoneClosing(true);
+                setDoneClosingTimeout(undefined);
+            }, 200)
         )
     }
 
@@ -51,14 +65,13 @@ export const NumberSelect = ({
 
     const addStyle = {
         ...incrementorStyle,
-        top: incrementorVerticalOffset
+        top: editing ? incrementorVerticalOffset : 0
     }
 
     const subtractStyle = {
         ...incrementorStyle,
-        bottom: incrementorVerticalOffset
+        bottom: editing ? incrementorVerticalOffset : 0
     }
-
 
     const blurStyle = {
         background: `radial-gradient(${numberBgColor}FF, ${numberBgColor}00, ${numberBgColor}00)`,
@@ -81,7 +94,7 @@ export const NumberSelect = ({
     )
 
     const increment = (change) => () => {
-        startTimeout();
+        startCloseTimeout();
         const nv = change + value;
         if (nv > max || nv < min) return;
         setValue(nv);
@@ -90,7 +103,7 @@ export const NumberSelect = ({
     const renderInputs = () => (
         <div className={`numberSelect_input ${editing ? '' : 'numberSelect_input-hidden'}`}>
             <div
-                className={`numberSelect_increment numberSelect_add ${editing ? 'numberSelect_editing' : ''}`}
+                className={'numberSelect_increment numberSelect_add'}
                 style={addStyle}
                 onClick={increment(1)}
             >
@@ -108,14 +121,22 @@ export const NumberSelect = ({
     )
 
     return (
-        <div className="numberSelect">
-
+        <div className={`numberSelect ${
+            editing ? 'numberSelect_editing' : ''
+        } ${
+            doneClosing ? 'numberSelect_doneClosing' : ''
+        }`}>
             <div
                 className="numberSelect_value"
                 onClick={() => {
-                    if (!editing)
-                        startTimeout();
-                    setEditing(!editing)
+                    if (!editing){
+                        startCloseTimeout();
+                        onOpenInput?.();
+                        setDoneClosing(false);
+                        setEditing(true);
+                    } else {
+                        close();
+                    }
                 }}
                 style={{
                     height: fullSize,
