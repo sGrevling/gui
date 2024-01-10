@@ -12,7 +12,8 @@ export const NumberSelect = ({
                                  selectorColor = '#1E90FF',
                                  timeout = 1000,
                                  onOpenInput,
-                                 closed
+                                 closed,
+                                 invert = false
                              }) => {
     const [editing, setEditing] = useState(false);
     const [doneClosing, setDoneClosing] = useState(true);
@@ -105,7 +106,7 @@ export const NumberSelect = ({
             <div
                 className={'numberSelect_increment numberSelect_add'}
                 style={addStyle}
-                onClick={increment(1)}
+                onClick={increment(invert ? -1 : 1)}
             >
                 {icon(true)}
             </div>
@@ -113,7 +114,7 @@ export const NumberSelect = ({
             <div
                 className="numberSelect_increment numberSelect_subtract"
                 style={subtractStyle}
-                onClick={increment(-1)}
+                onClick={increment(invert ? 1 : -1)}
             >
                 {icon()}
             </div>

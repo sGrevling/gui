@@ -38,7 +38,7 @@ function App() {
     const [lightMode, setLightMode] = useState(JSON.parse(localStorage.getItem('grevlingui.lightMode')));
     const [num, setNum] = useState(1);
     const [numClosed, setNumClosed] = useState(new Date());
-    const [num2, setNum2] = useState(1);
+    const [num2, setNum2] = useState(-1);
     const [num2Closed, setNum2Closed] = useState(new Date());
     const [colors, setColors] = useState({main: 'white', contrast: 'black'});
 
@@ -118,7 +118,9 @@ function App() {
                 size={4}
                 value={num2}
                 setValue={setNum2}
-                max={9}
+                invert
+                min={-9}
+                max={-1}
                 closed={num2Closed}
                 timeout={2000}
                 onOpenInput={() => setNumClosed(new Date())}
